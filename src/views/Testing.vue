@@ -28,9 +28,9 @@
         
         <div class="a-content">
          
-         <img :src=d.imageURL alt="llsadfnlsdfn" />
+         <!--img :src=d.image style="height: 200px; width: 100%; display: block;" alt="llsadfnlsdfn" /-->
        
-        <!--imageGallery v-bind:images="d.imageURL"></imageGallery-->
+        <imageGallery v-bind:images="d.image"></imageGallery>
         
         <div c1lass="card-body">
             <p class="card-text">{{d.long_description}}</p>

@@ -21,7 +21,7 @@
                 </blockquote>
                  
             <div class="card-body">
-            <h5 class="card-title">{{d.shortDes}}</h5>
+            <h5 class="card-title">{{d.short_description}}</h5>
             <!--h6 class="card-subtitle text-muted">Support card subtitle</h6-->
             </div>
             </label>
@@ -33,7 +33,7 @@
         <!--imageGallery v-bind:images="d.imageURL"></imageGallery-->
         
         <div c1lass="card-body">
-            <p class="card-text">{{d.longDes}}</p>
+            <p class="card-text">{{d.long_description}}</p>
         </div>
         
         <div class="card-footer text-muted">
@@ -49,7 +49,7 @@
 </template>
 <script>
 import imageGallery from '../components/ImageGallery.vue';
-
+import axios from 'axios';
 const API_URL = "https://vnrnews01.herokuapp.com/posts";
 //const API_URL="http://localhost:1337/posts";
 
@@ -72,29 +72,24 @@ export default {
 		 }
 	 },
 	 mounted(){
-         var request=new Request("https://vnrnews01.herokuapp.com/posts",{
-             method:"GET",
-             header:new Headers({
-                 'Content-Type':'application/json',
-                 'Authorization':'Bearer'+' '+localStorage.getItem('token')
-             })
-         })
-         fetch(API_URL,{
-             method:'GET',
-            //  headers:{
-            //      "Content-Type": "application/json",
-            //      "Authorization":'bearer '+localStorage.getItem('token')
-            //  }
-
-         })
-         .then(response =>response.json())
-         .then(result =>{
-             console.log('result is::');
-			console.log(result);
-			this.posts=result;
-		});
-	 },
-};
+       console.log("mounted of testing..!!")
+       console.log(localStorage.getItem('token'));
+      const res= axios
+                  .get('http://localhost:1337/posts',{
+                     headers:{
+                        Authorization:`Bearer ${localStorage.getItem('token')}`
+                     }
+                  })
+                  .then(res=>{
+                     console.log("response of the posts in tesrting is::");
+                     console.log(res);
+                     this.posts=res.data;
+                     console.log("data is::");
+                     console.log(this.posts);
+                  })
+                  
+   }
+}
  </script>
  
 

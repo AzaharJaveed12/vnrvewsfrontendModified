@@ -10,14 +10,14 @@ const state = {
 };
 
 const getters = {
-    // isLoggedIn: function (state) {
-    //     if (state.token != '') {
-    //         return true
-    //     } else {
-    //         return false
-    //     }
-    // }
-    isLoggedIn: state => !!state.token,
+    isLoggedIn: function (state) {
+        if (state.token != '') {
+            return true
+        } else {
+            return false
+        }
+    },
+    //isLoggedIn: state => !!state.token,
     authState: state => state.status,
     user: state => state.user,
     error: state => state.error
@@ -32,19 +32,31 @@ const actions = {
         try {
            console.log("entered into login action...")
             // let res = await axios.post('http:localhost:1337/auth/local', user);
+            //let res=null
             let res= await axios.post("http://localhost:1337/auth/local",user);
-            console.log(res);
+            console.log("aaaaaaaaaaaaaa" + JSON.stringify(res));
+            // if(res==null){
+            //     console.log("entered into error mode")
+            //     throw err;
+            // }     
+            console.log(res.data.jwt);     
             if (res.data.user.confirmed) {
-                const token = res.data.token;
+                console.log("entered into \"if\" of login actions..");
+                let token =res.data.jwt;
+                console.log("lol bhai..");
+                console.log(token);
                 const user = res.data.user;
                 // Store the token into the localstorage
                 localStorage.setItem('token', token);
+                console.log("token saved testing...!!");
+                console.log(localStorage.getItem('token'));
                 // Set the axios defaults
                 axios.defaults.headers.common['Authorization'] = token;
                 commit('auth_success', token, user);
             }
             return res;
         } catch (err) {
+            console.log("error had found.."+JSON.stringify(err));
             commit('auth_error', err);
         }
     },
@@ -54,17 +66,24 @@ const actions = {
     }, userData) {
         try {
             commit('register_request');
+            console.log("entered into register action..");
             let res = await axios.post('http://localhost:1337/auth/local/register', userData);
-            console.log(res)
+            console.log("recived dataa from strapi..")
+            console.log(res);
             // if (res.data.success !== undefined) {
             //     commit('register_success');
             // }
             if(res.data.user.confirmed){
-               commit('register_success');
+                console.log("entered into register_sucess statement");
+                console.log(res.data.jwt);
+                console.log("user data is::")
+                console.log(res.data.user);
+               commit('register_success',res.data.jwt,res.data.user);
+               console.log(state.token,state.user);
             }
             return res;
         } catch (err) {
-            commit('register_error', err)
+            commit('register_error', err);
         }
     },
     // Get the user Profile
@@ -111,18 +130,20 @@ const mutations = {
         state.error = null
     },
     auth_error(state, err) {
-        state.error = err.response.data.msg
+        state.error = "invalid username or password  .JPG"
     },
     register_request(state) {
         state.error = null
         state.status = 'loading'
     },
-    register_success(state) {
+    register_success(state,token,user) {
         state.error = null
+        state.token=token
+        state.user=user
         state.status = 'success'
     },
     register_error(state, err) {
-        state.error = err.response.data.msg
+        state.error = "username or email already taken..!!"
     },
     logout(state) {
         state.error = null

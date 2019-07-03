@@ -58,13 +58,15 @@ export default {
       };
       this.login(user)
         .then(res => {
-          //console.log(res);
-          if (res.data.success) {
-            this.$router.push("/newsfead");
+          console.log("opened login callback in component..");
+          console.log(res);
+          if (res.data.user.confirmed) {
+            console.log("enterd into this redirected route(res.data.user.confirmed) present in Login.vue");
+            this.$router.push("/posts");
           }
         })
         .catch(err => {
-          console.log(err);
+          console.log(err.message);
         });
     }
   }

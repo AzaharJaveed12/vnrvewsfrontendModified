@@ -96,9 +96,11 @@ export default {
         name: this.name
       };
       this.register(user).then(res => {
+        console.log("response in register page is::");
+        //console.log(res);
         console.log(res);
-        if (res.data.success) {
-          this.$router.push("login");
+        if (res.data.user.confirmed) {
+          this.$router.push("/posts");
         }
       });
     }

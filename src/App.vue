@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <Navbar/>
+    <testingNav/>
     <br>
     <br>
     <div class="container">
@@ -11,12 +12,14 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
+import testingNav from '@/components/TestingNav.vue';
 import Navbar from "@/components/Navbar";
 import Errors from "@/components/Errors";
 export default {
   components: {
     Navbar,
-    Errors
+    Errors,
+    testingNav
   },
   computed: {
     ...mapGetters(["error"])

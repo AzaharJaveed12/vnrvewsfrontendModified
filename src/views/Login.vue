@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h2>Login</h2>
     <div class="row">
       <div class="card mx-auto">
         <div class="card-header text-white bg-primary">
@@ -62,7 +61,7 @@ export default {
           console.log(res);
           if (res.data.user.confirmed) {
             console.log("enterd into this redirected route(res.data.user.confirmed) present in Login.vue");
-            this.$router.push("/posts");
+            this.$router.push("/");
           }
         })
         .catch(err => {

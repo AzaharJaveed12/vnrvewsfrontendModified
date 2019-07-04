@@ -34,6 +34,11 @@ const router = new Router({
         requiresGuest: true
       }
     },
+    {
+      path:'/teamdetails',
+      name:'teamdetails',
+      component:()=>import('./components/TeamDetails.vue')
+    },
     // {
     //   path: '/newsfead',
     //   name: 'profile',
@@ -42,14 +47,14 @@ const router = new Router({
     //     requiresAuth: true
     //   }
     // },
-    {
-      path:'/posts',
-      name:'posts',
-      component:()=>import('./views/Posts.vue'),
-      meta:{
-        requiresAuth:true
-      }
-    },
+    // {
+    //   path:'/posts',
+    //   name:'posts',
+    //   component:()=>import('./views/Posts.vue'),
+    //   meta:{
+    //     requiresAuth:true
+    //   }
+    // },
     {
       path:'/testing',
       name:'testing',
@@ -73,7 +78,7 @@ router.beforeEach((to, from, next) => {
     if (store.getters.isLoggedIn) {
       // Redirect to the profile Page
       //next('/profile');
-      next('/posts');
+      next('/');
     } else {
       next();
     }

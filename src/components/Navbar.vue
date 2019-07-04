@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <router-link class="navbar-brand" to="/posts"  v-if="isLoggedIn">VNR_NEWS</router-link>
+    <router-link class="navbar-brand" to="/" >VNR_NEWS</router-link>
     <button
       class="navbar-toggler"
       type="button"
@@ -15,7 +15,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item active">
-          <router-link to="/posts" class="nav-link">
+          <router-link to="/" class="nav-link">
             Home
             <span class="sr-only">(current)</span>
           </router-link>
@@ -32,9 +32,7 @@
         <!--li class="nav-item" v-if="isLoggedIn">
           <router-link to="/profile" class="nav-link">Profile</router-link>
         </li-->
-        <li class="nav-item" v-if="isLoggedIn">
-          <router-link to="/posts" class="nav-link">posts</router-link>
-        </li>
+        
         <li class="nav-item" v-if="isLoggedIn">
           <a to="/logout" class="nav-link" @click.prevent="logoutUser">Logout</a>
         </li>

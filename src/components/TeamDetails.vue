@@ -1,28 +1,62 @@
 <template>
-   <div>
-      <h1>details of::{{tag}}</h1>
-      <button v-on:click.prevent="checkingTag()">press me</button>
-      <p>{{team_details.description}}</p>
-      <p>{{team_details.details}}</p>
-      <img v-bind:src="team_details.logo" alt="lol macha..">
+<div> 
+   <div align="center">
+
+      <button class="btn btn-success" v-on:click.prevent="description()">description</button>
+      <button class="btn btn-success" v-on:click.prevent="members()">members</button>
+      <button class="btn btn-success" v-on:click.prevent="atchivements()">atchivements</button>
+      <button class="btn btn-success" v-on:click.prevent="leader()">leader</button>
+      <button class="btn btn-success" v-on:click.prevent="contact()">contact</button>
    </div>
+   <div>
+      <team-description v-if="display==='description'" v-bind:description="team_details.description"></team-description>
+      <members v-if="display==='members'" v-bind:members="team_details.members"/>
+      <leader-details v-if="display==='leader'"></leader-details>
+   </div>
+</div>
 </template>
+
+
 
 <script>
 import axios from 'axios';
+import leaderDetails from './TeamDetails/LeaderDetails.vue';
+import members from './TeamDetails/Members.vue';
+import teamDescription from './TeamDetails/TeamDescription.vue';
+
 export default {
+   components:{
+      leaderDetails,
+      members,
+      teamDescription
+   },
    data:function(){
       return{
          tag:localStorage.getItem('tag'),
-         team_details:{}
+         team_details:{},
+         display:"descriptiton"
       }
    },
    methods:{
-      checkingTag(){
-         console.log('checking tag..!!'+this.$store.state.token);
-         console.log('increament tsting::'+this.$store.state.count);
-         console.log("localstorage tag::"+localStorage.getItem('tag'))
+      description(){
+         console.log('description method is called..!!');
+         this.display="description";
+         console.log(this.display);
+      },
+      members(){
+         this.display= "members";
+      },
+      atchivements(){
+         this.display="atchivements";
+      },
+      contact(){
+         this.display="contact";
+      },
+      leader(){
+         this.display="leader";
       }
+
+
    },
    mounted(){
        console.log("mounted of testingNav..!!")
@@ -40,9 +74,14 @@ export default {
                     .then(res=>{
                         console.log("response of the teamdetails in testingNav is::");
                         console.log(res);
-                        this.$store.state.tag='';
                         this.team_details=res.data[0];
-                        console.log(this.team_details);
+                        localStorage.setItem('leader_details',JSON.stringify(this.team_details.leader));
+                        localStorage.setItem('members',JSON.stringify(this.team_details.members));
+                        localStorage.setItem('atchivements',JSON.stringify(this.team_details.atchivements));
+                        localStorage.setItem('description',JSON.stringify(this.team_details.description));
+                        localStorage.setItem('contact',JSON.stringify(this.team_details.details));
+                        console.log("leader details are::");
+                        console.log(localStorage.getItem('leader_details'));
                         
                     })           
       }

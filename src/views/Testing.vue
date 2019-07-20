@@ -151,8 +151,7 @@ export default {
           long_description:"",
           image:[],
           start_on:"",
-          ends_on:"",
-          token:localStorage.getItem("token") 
+          ends_on:""  
      };
   },
   methods: {
@@ -167,8 +166,10 @@ export default {
           start_on : this.start_on,
           ends_on : this.ends_on,  
           };
-    axios.defaults.headers.common['Authorization']="bearer "+this.token;
-     axios.post('http://localhost:1337/posts',{},posts).then(res=>{
+     const token=localStorage.getItem('token');
+    axios.defaults.headers.common['Authorization']="bearer "+token;
+    //axios.defaults.headers.common['Content-Type']="application/json"; 
+     axios.post('http://localhost:1337/posts',posts).then(res=>{
          console.log("posted sucesssfully..!!");
          console.log(res);
      })

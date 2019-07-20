@@ -84,6 +84,7 @@ export default {
              console.log("token is::::::::::::::::::");
              console.log(token);
              console.log(dataSending);
+             
               axios.defaults.headers.common['Authorization']="bearer "+token;
              axios.post(
                  "http://localhost:1337/likes",{},dataSending

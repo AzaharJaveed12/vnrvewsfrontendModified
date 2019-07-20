@@ -50,6 +50,8 @@ const actions = {
                 localStorage.setItem('token', token);
                 console.log("token saved testing...!!");
                 console.log(localStorage.getItem('token'));
+                localStorage.setItem('role',res.data.user.role.name);
+                console.log(localStorage.getItem('role'));
                 // Set the axios defaults
                 axios.defaults.headers.common['Authorization'] = token;
                 commit('auth_success', token, user);
@@ -113,6 +115,7 @@ const actions = {
         await localStorage.removeItem('token');
         commit('logout');
         delete axios.defaults.headers.common['Authorization'];
+        localStorage.clear();
         router.push('/login');
         return
     }

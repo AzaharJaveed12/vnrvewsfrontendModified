@@ -1,17 +1,19 @@
 <template>
 <div> 
-   <div align="center">
+   <div align="center" style="border:10px;margin:10px">
 
-      <button class="btn btn-success" v-on:click.prevent="description()">description</button>
-      <button class="btn btn-success" v-on:click.prevent="members()">members</button>
-      <button class="btn btn-success" v-on:click.prevent="atchivements()">atchivements</button>
-      <button class="btn btn-success" v-on:click.prevent="leader()">leader</button>
-      <button class="btn btn-success" v-on:click.prevent="contact()">contact</button>
+      <button style="margin:10px" class="btn btn-success" v-on:click.prevent="description()">description</button>
+      <button style="margin:10px" class="btn btn-success" v-on:click.prevent="members()">members</button>
+      <button style="margin:10px" class="btn btn-success" v-on:click.prevent="atchivements()">atchivements</button>
+      <button style="margin:10px" class="btn btn-success" v-on:click.prevent="leader()">leader</button>
+      <button style="margin:10px" class="btn btn-success" v-on:click.prevent="contact()">contact</button>
    </div>
    <div>
-      <team-description v-if="display==='description'" v-bind:description="team_details.description"></team-description>
-      <members v-if="display==='members'" v-bind:members="team_details.members"/>
+      <team-description v-if="display==='description'"></team-description>
+      <members v-if="display==='members'" />
       <leader-details v-if="display==='leader'"></leader-details>
+      <contact v-if="display=='contact'"/>
+      <Atchivements v-if="display=='atchivements'"/>
    </div>
 </div>
 </template>
@@ -23,18 +25,22 @@ import axios from 'axios';
 import leaderDetails from './TeamDetails/LeaderDetails.vue';
 import members from './TeamDetails/Members.vue';
 import teamDescription from './TeamDetails/TeamDescription.vue';
+import Contact from './TeamDetails/Contact.vue';
+import Atchivements from './TeamDetails/Atchivements.vue';
 
 export default {
    components:{
       leaderDetails,
       members,
-      teamDescription
+      teamDescription,
+      Contact,
+      Atchivements
    },
    data:function(){
       return{
          tag:localStorage.getItem('tag'),
          team_details:{},
-         display:"descriptiton"
+         display:"description"
       }
    },
    methods:{
@@ -76,7 +82,7 @@ export default {
                         console.log(res);
                         this.team_details=res.data[0];
                         localStorage.setItem('leader_details',JSON.stringify(this.team_details.leader));
-                        localStorage.setItem('members',JSON.stringify(this.team_details.members));
+                        localStorage.setItem('members',JSON.stringify(this.team_details.memebers));
                         localStorage.setItem('atchivements',JSON.stringify(this.team_details.atchivements));
                         localStorage.setItem('description',JSON.stringify(this.team_details.description));
                         localStorage.setItem('contact',JSON.stringify(this.team_details.details));

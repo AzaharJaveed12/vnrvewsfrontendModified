@@ -22,7 +22,7 @@
         </ul>
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-               <a class="nav-link" href="/" v-if="isLoggedIn" v-on:click.prevent="logoutUser">logOut ho bhai..</a>
+               <a class="nav-link" href="/" v-if="isLoggedIn" v-on:click.prevent="logoutUser">Logout</a>
             </li>
         </ul>
       </div>

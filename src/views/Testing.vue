@@ -1,201 +1,200 @@
 <template>
-    <div>
-       <ul style="list-style : none" class="a-container" >
-        <li v-for="(d,i) in reversedPosts" v-bind:key=i class="a-items" >
-        <div class="card mb-3" id="cardmb-3">
-            <input type="radio" name="ac" :id=i />
-            <label :for=i>
-                <blockquote class="blockquote text-center card-header" 
-                v-bind:class="{'Notice':(d.tag=='COLLEGE_NOTICE'||d.tag=='AE_NOTICE'
-                 ||d.tag=='CE_NOTICE'||d.tag=='CSE_NOTICE'||d.tag=='EEE_NOTICE'||d.tag=='ECE_NOTICE'||d.tag=='EIE_NOTICE'
-                 ||d.tag=='IT_NOTICE'||d.tag=='ME_NOTICE'),
-                 'Sports':(d.tag=='SPORTS'),'Seminar':(d.tag=='SEMINARS'),
-                 'StuedntChapters':(d.tag=='ACM'||d.tag=='ASME'||d.tag=='CEA'||d.tag=='CSI'||d.tag=='IEEE'
-                 ||d.tag=='IEI'||d.tag=='IETE'||d.tag=='ISOI'||d.tag=='ISTE'||d.tag=='SAE'),
-                 'Clubs':(d.tag=='CreativeArts'||d.tag=='Crescendo'||d.tag=='Dramaitx'||d.tag=='LivewireCrew'
-                 ||d.tag=='NSS'||d.tag=='Scintillate'||d.tag=='Stentorian'||d.tag=='విజ్ఞానజ్యోతి సాహితీవనం'
-                 ||d.tag=='VJTeatro'||d.tag=='VNRSF'),
-                 'Others':(d.tag=='Others')}">
-                    <p class="mb-0" >{{d.title}}</p>
-                    <footer class="blockquote-footer"><cite title="Source Title">{{d.tag}}</cite></footer>
-                </blockquote>
-                 
-            <div class="card-body">
-            <h5 class="card-title">{{d.short_description}}</h5>
-            <!--h6 class="card-subtitle text-muted">Support card subtitle</h6-->
+  <div>
+    <h2>Create Post</h2>
+    <div class="row">
+      <div class="card mx-auto">
+        <div class="card-header text-white bg-primary">
+          <h4>Post creation form</h4>
+        </div>
+        <div class="card-body">
+          <form @submit.prevent="createPost">
+            <div class="form-group">
+              <label for="title">Title</label>
+              <input
+                id="Title"
+                type="text"
+                placeholder="Enter the Title"
+                name="Title"
+                v-model="title"
+                class="form-control"
+                required
+              >
             </div>
-            </label>
-        
-        <div class="a-content">
-         
-         <!--img :src=d.image style="height: 200px; width: 100%; display: block;" alt="llsadfnlsdfn" /-->
-       
-        <imageGallery v-bind:images="d.image"></imageGallery>
-        
-        <div c1lass="card-body">
-            <p class="card-text">{{d.long_description}}</p>
-        </div>
-        
-        <div class="card-footer text-muted">
-            --days
-        </div>
-        </div>
-    </div> 
-         
-    </li>
-    </ul>
-                              
-    </div>
-</template>
-<script>
-import imageGallery from '../components/ImageGallery.vue';
-import axios from 'axios';
-const API_URL = "https://vnrnews01.herokuapp.com/posts";
-//const API_URL="http://localhost:1337/posts";
+            
 
-export default {
-     components: {
-         imageGallery,
-	 },
-	 data:function(){
-		 return{
-			 posts:[]
-		 }
-	 },
-	 computed:{
-		 reversedPosts(){
-             console.log("token is::");
-             console.log(this.$store.state.Token);
-             console.log("entered into reserved posts..!!");
-
-             return this.posts;
-		 }
-	 },
-	 mounted(){
-       console.log("mounted of testing..!!")
-       console.log(localStorage.getItem('token'));
-      const res= axios
-                  .get('http://localhost:1337/posts',{
-                     headers:{
-                        Authorization:`Bearer ${localStorage.getItem('token')}`
-                     }
-                  })
-                  .then(res=>{
-                     console.log("response of the posts in tesrting is::");
-                     console.log(res);
-                     this.posts=res.data;
-                     console.log("data is::");
-                     console.log(this.posts);
-                  })
-                  
-   }
-}
- </script>
+            <div class="form-group">
+              <label for="tag">Tag</label>
+              <br>
+              
+              <select v-model="tag" required>
+                <option  disabled value="">Please select a revelant tag</option>
+                <option value="COLLEGE_NOTICE">COLLEGE_NOTICE</option>
+                <option value="AE_NOTICE">AE_NOTICE</option>
+                <option value="CE_NOTICE">CE_NOTICE</option>
+                <option value="CSE_NOTICE">CSE_NOTICE</option>
+                <option value="ME_NOTICE">ME_NOTICE</option>
+                <option value="EEE_NOTICE">EEE_NOTICE</option>
+                <option value="ECE_NOTICE">ECE_NOTICE</option>
+                <option value="EIE_NOTICE">EIE_NOTICE</option>
+                <option value="IT_NOTICE">IT_NOTICE</option>
+                <option value="SEMINARS">SEMINARS</option>
+                <option value="ACM">ACM</option>
+                <option value="ASME">ASME</option>
+                <option value="CEA">CEA</option>
+                <option value="CSI">CSI</option>
+                <option value="IEEE">IEEE</option>
+                <option value="IEI">IEI</option>
+                <option value="IETE">IETE</option>
+                <option value="ISOI">ISOI</option>
+                <option value="ISTE">ISTE</option>
+                <option value="SAE">SAE</option>
+                <option value="CreativeArts">CreativeArts</option>
+                <option value="Crescendo">Crescendo</option>
+                <option value="Dramaitx">Dramaitx</option>
+                <option value="LivewireCrew">LivewireCrew</option>
+                <option value="NSS">NSS</option>
+                <option value="Scintillate">Scintillate</option>
+                <option value="Stentorian">Stentorian</option>
+                <option value="విజ్ఞానజ్యోతి సాహితీవనం">విజ్ఞానజ్యోతి సాహితీవనం</option>
+                <option value="VNRSF">VNRSF</option>
+                <option value="VJTeatro">VJTeatro</option>
+                <option value="Others">Others</option>
+                <option value="SPORTS">SPORTS</option>
+            </select>
+            </div>
+            <div class="form-group">
+              <label for="short_description">Short Description</label>
+              <input
+                id="short_description"
+                type="text" 
+                placeholder="Enter the short_description "
+                name="short_description"
+                v-model="short_description"
+                class="form-control"
+                required
+              >
+            </div>
+            
+            <div class="form-group">
+              <label for="long_description">Long Description</label>
+              <input
+                id="long_description"
+                type="textarea"
+                rows="20" 
+                cols="50"
+                placeholder="Enter Long_description "
+                name="long_description"
+                v-model="long_description"
+                class="form-control"
+                required
+              >
+            </div>
+            <div class="form-group">
+              <label for="image">ImageURL</label>
+              <br>
+             <input
+                id="image"
+                type="url"
+                placeholder="Copy paste the url"
+                name="image"
+                v-model="image"
+                class="form-control"
+                required
+              > 
+            </div>
+            
+            <div class="form-group">
+              <label for="start_on">Start Date</label>
+              <br>
+             <input
+                id="start_on"
+                type="datetime-local"                
+                name="start_on"
+                v-model="start_on"
+                class="form-control"
+            
+              > 
+            </div> 
+            <div class="form-group">
+              <label for="ends_on">End Date</label>
+              <br>
+             <input
+                id="ends_on"
+                type="datetime-local"                
+                name="ends_on"
+                v-model="ends_on"
+                class="form-control"
+                
+              > 
+            </div>
  
+              
+            
+            <button class="btn btn-primary">Create Post</button>
+            <br>
+           </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
 
-<style scoped>
-        
-#cardmb-3{
-    margin: 50px;
-    border: 1.5px solid gray;
+<script>
+import { mapActions } from "vuex";
+import axios from 'axios';
+export default {
+  data() {
+    return {
+          title:"",
+          tag:"",
+          short_description:"",
+          long_description:"",
+          image:[],
+          start_on:"",
+          ends_on:"",
+          token:localStorage.getItem("token") 
+     };
+  },
+  methods: {
+    //...mapActions(["postCreation"]),
+      createPost(){
+      let posts = {
+          title : this.title,
+          tag : this.tag,
+          short_description : this.short_description,
+          long_description : this.long_description,
+          image : this.image,
+          start_on : this.start_on,
+          ends_on : this.ends_on,  
+          };
+    axios.defaults.headers.common['Authorization']="bearer "+this.token;
+     axios.post('http://localhost:1337/posts',{},posts).then(res=>{
+         console.log("posted sucesssfully..!!");
+         console.log(res);
+     })
+      
+    //   this.createPost(posts).then(res => {
+    //     //console.log("response in register page is::");
+    //     //console.log(res);
+    //     console.log(res);
+    //     if (res.data.user.confirmed) {
+    //       this.$router.push("/");
+    //     }
+    //   });
+    }
+  }
+};
+</script>
+
+<style>
+.card {
+  width: 60%;
+  border-radius: 0;
 }
-        /* reset */
-        .mb-0{
-            color: black;
-        } 
-        .blockquote-footer{
-            color: black;
-        }
-        ul {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-        }
-
-        input[type=radio] {
-        display: none;
-        }
-
-        /* style */
-        .a-container {
-        width: 100%;
-        margin: 20px auto;
-        }
-
-        .a-container label {
-        display: block;
-        position: relative;
-        cursor: pointer;
-        font-size: 18px;
-        font-weight: bold;
-        padding: 10px 20px;
-        color: #aaa;
-        background-color: #eee;
-        border-bottom: 1px solid #ddd;
-        
-        -webkit-transition: all .2s ease;
-        -moz-transition: all .2s ease;
-        -ms-transition: all .2s ease;
-        -o-transition: all .2s ease;
-        transition: all .2s ease;
-        }
-
-        .a-container label:after {
-        content: "";
-        width: 0%;
-        height: 0;
-        border-top: 8px solid #aaa;
-        border-right: 6px solid transparent;
-        border-bottom: 8px solid transparent;
-        border-left: 6px solid transparent;
-        position: absolute;
-        right: 10px;
-        top: 16px;
-        }
-
-        .a-container input:checked + label,
-        .a-container label:hover {
-        background-color: #ddd;
-        color: #222;
-        }
-
-        .a-container input:checked + label:after {
-        border-top: 8px solid transparent;
-        border-right: 6px solid transparent;
-        border-bottom: 8px solid #222;
-        border-left: 6px solid transparent;
-        top: 6px;
-        }
-
-        .a-content {
-        padding: 0 20px 20px;
-        display: none;
-        }
-
-        .a-container input:checked ~ .a-content {
-        display: block;
-        }
-        .Notice{
-            background-color:greenyellow;
-        }
-        .Sports{
-            background-color: dodgerblue;
-        }
-        .StuedntChapters{
-            background-color:orangered
-
-        }
-        .Clubs{
-            background-color: darksalmon
-        }
-        .Seminar{
-            background-color: crimson
-        }
-        .Others{
-            background-color: purple
-        }
-
-
-        </style>
-
-
+.btn {
+  border-radius: 0;
+}
+.form-control {
+  border-radius: 0;
+}
+</style>

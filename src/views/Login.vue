@@ -61,6 +61,8 @@ export default {
           console.log(res);
           if (res.data.user.confirmed) {
             console.log("enterd into this redirected route(res.data.user.confirmed) present in Login.vue");
+            const userDetails={"name":res.data.user.username};
+            localStorage.setItem('userDetails',JSON.stringify(userDetails));
             this.$router.push("/");
           }
         })

@@ -39,7 +39,15 @@
         <div class="card-footer text-muted">
             --days
         </div>
+
+         <div>
+            <h1>this div is for comments and likes</h1>
+            <button v-on:click.prevent="liked(d.id)">like</button>
         </div>
+
+        </div>
+
+       
     </div> 
          
     </li>
@@ -61,7 +69,29 @@ export default {
 		 return{
 			 posts:[]
 		 }
-	 },
+     },
+     methods:{
+         liked:function(id){
+             console.log("id of liked post..!!");
+             console.log(id);
+             const userDetails=JSON.parse(localStorage.getItem('userDetails'));
+             console.log(userDetails);
+             const dataSending={
+                 id:id,
+                 likes:userDetails
+             };
+             const token=localStorage.getItem('token');
+             console.log("token is::::::::::::::::::");
+             console.log(token);
+             console.log(dataSending);
+              axios.defaults.headers.common['Authorization']="bearer "+token;
+             axios.post(
+                 "http://localhost:1337/likes",{},dataSending
+             ).then(res=>{
+                console.log(res);
+            });
+         }
+     },
 	 computed:{
 		 reversedPosts(){
              console.log("token is::");

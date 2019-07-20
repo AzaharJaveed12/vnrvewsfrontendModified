@@ -17,6 +17,7 @@
                 name="username"
                 v-model="username"
                 class="form-control"
+                required
               >
             </div>
             <div class="form-group">
@@ -28,8 +29,68 @@
                 name="name"
                 v-model="name"
                 class="form-control"
+                required
               >
             </div>
+            <div class="form-group">
+              <label for="College_name">College Name</label>
+              <br>
+             <input
+                id="college_name"
+                type="text"
+                placeholder="Enter College Name"
+                name="College_name"
+                v-model="College_name"
+                class="form-control"
+                required
+              >
+              <small id="emailHelp" class="form-text text-muted">Enter ShortForms with Capital Letters only</small>
+    
+            </div>
+            
+
+            <div class="form-group">
+              <label for="Branch">Branch</label>
+              <br>
+              
+              <select v-model="Branch" required>
+                <option  disabled value=""> Please select your branch </option>
+                <option value="AE">AE</option>
+                <option value="CE">CE</option>
+                <option value="CSE">CSE</option>
+                <option value="EEE">EEE</option>
+                <option value="ECE">ECE</option>
+                <option value="EIE">EIE</option>
+                <option value="IT">IT</option>
+                <option value="ME">ME</option>
+              
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="Year">Year</label>
+              <br>
+              <select v-model="Year" required>
+                <option  disabled value="">Select year</option>
+                <option value="1">1st year</option>
+                <option value="2">2nd year</option>
+                <option value="3">3rd year</option>
+                <option value="4">4th year</option>
+                 
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="Roll_no">Roll Number</label>
+              <br>
+              <input 
+                id="Roll_no"
+                type="text"
+
+                v-model="Roll_no"
+                placeholder="Enter Roll Number"
+                required
+              >
+             </div>
+
             <div class="form-group">
               <label for="email">Email</label>
               <input
@@ -39,8 +100,10 @@
                 name="email"
                 v-model="email"
                 class="form-control"
+                required
               >
             </div>
+            
             <div class="form-group">
               <label for="password">Password</label>
               <input
@@ -50,6 +113,7 @@
                 name="password"
                 id="password"
                 v-model="password"
+                required
               >
             </div>
             <div class="form-group">
@@ -61,10 +125,24 @@
                 name="confirm_password"
                 id="confirm_password"
                 v-model="confirm_password"
+                required
               >
+            <div class="form-group">
+              <label for="Phone_NO">Phone Number </label>
+              <br>
+              <input 
+                type="text"
+                id="Phone_NO"
+                v-model="Phone_no"
+                placeholder="Enter Phone Number"
+                required
+              >
+             
+            </div>
+              
             </div>
             <button class="btn btn-primary">Register</button>
-            &nbsp;&nbsp;&nbsp;&nbsp;
+            <br>
             <router-link to="/login" class="card-link">Already have an account?</router-link>
           </form>
         </div>
@@ -82,7 +160,12 @@ export default {
       password: "",
       confirm_password: "",
       name: "",
-      email: ""
+      email: "",
+      Branch:"",
+      Year:"",
+      College_name:"",
+      Roll_no:"",
+      Phone_no:""
     };
   },
   methods: {
@@ -93,14 +176,20 @@ export default {
         password: this.password,
         confirm_password: this.confirm_password,
         email: this.email,
-        name: this.name
+        name: this.name,
+        year:this.Year,
+        branch:this.Branch,
+        college_name:this.College_name,
+        roll_no:this.Roll_no,
+        phone_no:this.Phone_no
       };
       this.register(user).then(res => {
-        console.log("response in register page is::");
+        //console.log("response in register page is::");
         //console.log(res);
         console.log(res);
         if (res.data.user.confirmed) {
-          this.$router.push("/posts");
+          console.log("res.data.user.confirmed");
+          this.$router.push("/");
         }
       });
     }
